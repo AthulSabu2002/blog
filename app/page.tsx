@@ -1,9 +1,10 @@
 import React from 'react';
 import { Metadata } from 'next';
-import Header from '@/components/Header';
 import FeaturedSection from '@/components/FeaturedSection';
 import RecentPosts from '@/components/RecentPosts';
 import { BlogPost, FeaturedPost } from '@/types';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Beyond UI - SaaS Solutions & Design',
@@ -11,86 +12,85 @@ export const metadata: Metadata = {
 };
 
 async function getData() {
-  const featuredPost: FeaturedPost = {
-    id: '1',
-    title: 'Unlocking Business Efficiency with SaaS Solutions',
-    description: 'Discover how modern SaaS solutions can transform your business operations and drive growth.',
-    image: '/api/placeholder/800/400',
-    category: 'Business'
-  };
-
-  const otherFeaturedPosts = [
-    {
-      title: 'Revolutionizing industries through SaaS implementation',
-      description: 'How SaaS is changing the landscape of various industries worldwide.',
-      image: '/api/placeholder/64/64'
-    },
-    {
-      title: 'Synergizing saas and UX design for elevating digital experiences',
-      description: 'The perfect blend of functionality and user experience in modern applications.',
-      image: '/api/placeholder/64/64'
-    },
-    {
-      title: 'Navigating saas waters with intuitive UI and UX',
-      description: 'Best practices for creating user-friendly SaaS interfaces.',
-      image: '/api/placeholder/64/64'
-    },
-    {
-      title: 'Sculpting saas success - the art of UI and UX design',
-      description: 'Crafting exceptional user experiences in SaaS products.',
-      image: '/api/placeholder/64/64'
-    },
-    {
-      title: 'Transforming saas platforms - a UI/UX design odyssey',
-      description: 'A comprehensive guide to modernizing SaaS platform design.',
-      image: '/api/placeholder/64/64'
+  const apiUrl = 'https://688c90d0cd9d22dda5cd9ea1.mockapi.io/posts';
+  
+  try {
+    const response = await fetch(apiUrl, { next: { revalidate: 3600 } });
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data: ${response.status}`);
     }
-  ];
-
-  const recentPosts: BlogPost[] = [
-    {
-      id: '1',
-      title: 'Mastering UI Elements: A Practical Guide for Designers',
-      excerpt: 'Dive into the world of user interfaces with our expert guides, latest trends, and practical tips.',
-      author: 'Jennifer Taylor',
-      readTime: '3 min read',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      id: '2',
-      title: 'Crafting Seamless Experiences: The Art of Intuitive UI Design',
-      excerpt: 'Explore the principles and techniques that drive user-centric UI design, ensuring a seamless and intuitive experience.',
-      author: 'Jennifer Taylor',
-      readTime: '5 min read',
-      image: '/api/placeholder/400/300'
-    },
-    {
-      id: '3',
-      title: 'Beyond Aesthetics: The Power of Emotional UX Design',
-      excerpt: 'Delve into the realm of emotional design and discover how incorporating empathy and psychological principles can create more engaging user experiences.',
-      author: 'Ryan A.',
-      readTime: '2 min read',
-      image: '/api/placeholder/400/300'
+    
+    const textData = await response.text();
+    
+    if (!textData) {
+      console.error('Received empty response from API');
+      throw new Error('Empty response received');
     }
-  ];
-
-  return {
-    featuredPost,
-    otherFeaturedPosts,
-    recentPosts
-  };
+    
+    let posts;
+    try {
+      posts = JSON.parse(textData);
+    } catch {
+      throw new Error('Invalid JSON response');
+    }
+    
+    const featuredPost: FeaturedPost = posts[0] && {
+      id: posts[0].id || '1',
+      title: posts[0].title || 'Unlocking Business Efficiency with SaaS Solutions',
+      description: posts[0].description || 'Discover how modern SaaS solutions can transform your business operations and drive growth.',
+      image: posts[0].image || '/api/placeholder/800/400',
+      category: posts[0].category || 'Business'
+    }
+    
+    const otherFeaturedPosts = posts.slice(1, 6).map((post: { id: string; title: string; description: string; image: string; }) => ({
+      id: post.id,
+      title: post.title,
+      description: post.description || '',
+      image: post.image
+    }));
+    
+    const recentPosts: BlogPost[] = posts.slice(6, 9).map((post: { id: string; title: string; description: string; author: string; readTime: string; image: string; }) => ({
+      id: post.id || '',
+      title: post.title || '',
+      description: post.description || '',
+      author: post.author || 'Unknown Author',
+      readTime: post.readTime || '3 min read',
+      image: post.image || '/api/placeholder/400/300'
+    }));
+    
+    return {
+      featuredPost,
+      otherFeaturedPosts,
+      recentPosts
+    };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    
+    return {
+      featuredPost: null,
+      otherFeaturedPosts: [],
+      recentPosts: []
+    };
+  }
 }
 
 export default async function Home() {
   const { featuredPost, otherFeaturedPosts, recentPosts } = await getData();
 
+  const defaultFeaturedPost: FeaturedPost = {
+    id: '1',
+    title: 'Unlocking Business Efficiency with SaaS Solutions',
+    description: 'Discover how modern SaaS solutions can transform your business operations and drive growth.',
+    image: '/api/placeholder/800/400',
+    category: 'Business',
+    featured: true
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      
       <main>
         <FeaturedSection 
-          featuredPost={featuredPost}
+          featuredPost={featuredPost || defaultFeaturedPost}
           otherPosts={otherFeaturedPosts}
         />
         

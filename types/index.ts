@@ -1,7 +1,6 @@
 export interface BlogPost {
   id: string;
   title: string;
-  excerpt: string;
   author: string;
   readTime: string;
   image: string;
@@ -12,6 +11,7 @@ export interface FeaturedPost {
   id: string;
   title: string;
   description: string;
+  featured: boolean;
   image: string;
   category: string;
 }
@@ -19,11 +19,13 @@ export interface FeaturedPost {
 export interface BlogPost {
   id: string;
   title: string;
-  excerpt: string;
   author: string;
   readTime: string;
   image: string;
+  description?: string;
+  content: string;
   category?: string;
+  date?: string;
 }
 
 export interface FeaturedPost {

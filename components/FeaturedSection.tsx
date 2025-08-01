@@ -1,10 +1,14 @@
-import React from 'react';
+"use client"
+
+import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FeaturedPost } from '../types';
 
 interface FeaturedSectionProps {
   featuredPost: FeaturedPost;
   otherPosts: Array<{
+    id: string;
     title: string;
     description: string;
     image: string;
@@ -12,42 +16,73 @@ interface FeaturedSectionProps {
 }
 
 const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPosts }) => {
+  const [mainImageError, setMainImageError] = useState(false);
+  const [smallImageErrors, setSmallImageErrors] = useState<{[key: number]: boolean}>({});
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8 min-h-screen flex flex-col">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-5 min-h-screen flex flex-col">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 flex-grow">
         <div className="lg:col-span-2">
-          <div className="relative h-[72vh] rounded-2xl overflow-hidden group cursor-pointer">
-            <Image
-              src="/api/placeholder/800/400"
-              alt={featuredPost.title}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6">
-              <span className="inline-block bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm mb-3">
-                {featuredPost.category}
-              </span>
-              <h2 className="text-white text-2xl md:text-3xl font-bold leading-tight">
-                {featuredPost.title}
-              </h2>
+          <Link href={`/posts/${featuredPost.id}`} className="block">
+            <div className="relative h-[72vh] rounded-2xl overflow-hidden group cursor-pointer">
+              {mainImageError ? (
+                <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500">
+                  <span>Image unavailable</span>
+                </div>
+              ) : (
+                <Image
+                  src={featuredPost.image}
+                  alt={featuredPost.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  placeholder="blur"
+                  blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2YyZjJmMiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkltYWdlIHVuYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg=="
+                  onError={() => {
+                    setMainImageError(true);
+                  }}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority={false}
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6">
+                <span className="inline-block bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm mb-3">
+                  {featuredPost.category}
+                </span>
+                <h2 className="text-white text-2xl md:text-3xl font-bold leading-tight">
+                  {featuredPost.title}
+                </h2>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
 
         <div className="space-y-6 h-[72vh] flex flex-col">
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Other featured posts</h3>
           <div className="overflow-y-auto flex-grow pr-2">
             {otherPosts.map((post, index) => (
-              <div key={index} className="flex space-x-4 group cursor-pointer mb-6 last:mb-0">
+              <Link 
+                href={`/posts/${post.id}`} 
+                key={index} 
+                className="flex space-x-4 group cursor-pointer mb-6 last:mb-0"
+              >
                 <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden">
-                  <Image
-                    src="/api/placeholder/64/64"
-                    alt={post.title}
-                    width={64}
-                    height={64}
-                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                  />
+                  {smallImageErrors[index] ? (
+                    <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500 text-xs">
+                      <span>Image Unavailable</span>
+                    </div>
+                  ) : (
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      width={64}
+                      height={64}
+                      className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                      onError={() => {
+                        setSmallImageErrors(prev => ({ ...prev, [index]: true }));
+                      }}
+                    />
+                  )}
                 </div>
                 <div className="flex-1">
                   <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">
@@ -57,12 +92,11 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPo
                     {post.description}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       </div>
-      <div className="pb-12"></div>
     </div>
   );
 };
