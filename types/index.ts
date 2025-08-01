@@ -5,6 +5,7 @@ export interface BlogPost {
   readTime: string;
   image: string;
   category?: string;
+  authorAvatar: string;
 }
 
 export interface FeaturedPost {

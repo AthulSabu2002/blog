@@ -49,13 +49,14 @@ async function getData() {
       image: post.image
     }));
     
-    const recentPosts: BlogPost[] = posts.slice(6, 9).map((post: { id: string; title: string; description: string; author: string; readTime: string; image: string; }) => ({
+    const recentPosts: BlogPost[] = posts.slice(6, 9).map((post: { id: string; title: string; description: string; author: string; readTime: string; image: string; authorAvatar: string; }) => ({
       id: post.id || '',
       title: post.title || '',
       description: post.description || '',
       author: post.author || 'Unknown Author',
       readTime: post.readTime || '3 min read',
-      image: post.image || '/api/placeholder/400/300'
+      image: post.image,
+      authorAvatar: post.authorAvatar
     }));
     
     return {

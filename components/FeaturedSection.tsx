@@ -49,7 +49,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPo
                 <span className="inline-block bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm mb-3">
                   {featuredPost.category}
                 </span>
-                <h2 className="text-white text-2xl md:text-3xl font-bold leading-tight">
+                <h2 className="text-white text-3xl md:text-4xl font-bold leading-tight">
                   {featuredPost.title}
                 </h2>
               </div>

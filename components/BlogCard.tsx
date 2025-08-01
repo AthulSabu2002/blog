@@ -11,6 +11,7 @@ interface BlogCardProps {
 
 const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   const [imageError, setImageError] = useState(false);
+  const [avatarError, setAvatarError] = useState(false);
 
   return (
     <Link href={`/posts/${post.id}`} className="group">
@@ -42,6 +43,21 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           </h3>
           <p className="text-gray-600 mt-2 line-clamp-2">{post.description}</p>
           <div className="flex items-center mt-4 text-sm text-gray-500">
+            {post.authorAvatar && !avatarError ? (
+              <div className="relative w-6 h-6 mr-2">
+                <Image
+                  src={post.authorAvatar}
+                  alt={`${post.author} avatar`}
+                  fill
+                  className="rounded-full object-cover"
+                  onError={() => setAvatarError(true)}
+                />
+              </div>
+            ) : (
+              <div className="w-6 h-6 rounded-full bg-gray-200 mr-2 flex items-center justify-center">
+                <span className="text-xs text-gray-500">{post.author.charAt(0)}</span>
+              </div>
+            )}
             <span>{post.author}</span>
             <span className="mx-2">•</span>
             <span>{post.readTime}</span>
