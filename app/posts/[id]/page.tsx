@@ -21,7 +21,7 @@ const Post = () => {
   const { data: post, isLoading, isError } = useQuery({
     queryKey: ['post', postId],
     queryFn: async () => {
-      const apiUrl = `https://688c90d0cd9d22dda5cd9ea1.mockapi.io/posts/${postId}`;
+      const apiUrl = process.env.API_URL + `/${postId}`;
       const response = await fetch(apiUrl);
       
       if (!response.ok) {

@@ -11,7 +11,12 @@ export const metadata: Metadata = {
 };
 
 async function getAllPosts() {
-  const apiUrl = 'https://688c90d0cd9d22dda5cd9ea1.mockapi.io/posts';
+  const apiUrl = process.env.API_URL;
+  
+  if (!apiUrl) {
+    console.error('API_URL environment variable is not defined');
+    return [];
+  }
   
   try {
     const response = await fetch(apiUrl, { next: { revalidate: 3600 } });
