@@ -1,103 +1,101 @@
-import Image from "next/image";
+import React from 'react';
+import { Metadata } from 'next';
+import Header from '@/components/Header';
+import FeaturedSection from '@/components/FeaturedSection';
+import RecentPosts from '@/components/RecentPosts';
+import { BlogPost, FeaturedPost } from '@/types';
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: 'Beyond UI - SaaS Solutions & Design',
+  description: 'Unlock business efficiency with innovative SaaS solutions and cutting-edge UI/UX design.',
+};
+
+async function getData() {
+  const featuredPost: FeaturedPost = {
+    id: '1',
+    title: 'Unlocking Business Efficiency with SaaS Solutions',
+    description: 'Discover how modern SaaS solutions can transform your business operations and drive growth.',
+    image: '/api/placeholder/800/400',
+    category: 'Business'
+  };
+
+  const otherFeaturedPosts = [
+    {
+      title: 'Revolutionizing industries through SaaS implementation',
+      description: 'How SaaS is changing the landscape of various industries worldwide.',
+      image: '/api/placeholder/64/64'
+    },
+    {
+      title: 'Synergizing saas and UX design for elevating digital experiences',
+      description: 'The perfect blend of functionality and user experience in modern applications.',
+      image: '/api/placeholder/64/64'
+    },
+    {
+      title: 'Navigating saas waters with intuitive UI and UX',
+      description: 'Best practices for creating user-friendly SaaS interfaces.',
+      image: '/api/placeholder/64/64'
+    },
+    {
+      title: 'Sculpting saas success - the art of UI and UX design',
+      description: 'Crafting exceptional user experiences in SaaS products.',
+      image: '/api/placeholder/64/64'
+    },
+    {
+      title: 'Transforming saas platforms - a UI/UX design odyssey',
+      description: 'A comprehensive guide to modernizing SaaS platform design.',
+      image: '/api/placeholder/64/64'
+    }
+  ];
+
+  const recentPosts: BlogPost[] = [
+    {
+      id: '1',
+      title: 'Mastering UI Elements: A Practical Guide for Designers',
+      excerpt: 'Dive into the world of user interfaces with our expert guides, latest trends, and practical tips.',
+      author: 'Jennifer Taylor',
+      readTime: '3 min read',
+      image: '/api/placeholder/400/300'
+    },
+    {
+      id: '2',
+      title: 'Crafting Seamless Experiences: The Art of Intuitive UI Design',
+      excerpt: 'Explore the principles and techniques that drive user-centric UI design, ensuring a seamless and intuitive experience.',
+      author: 'Jennifer Taylor',
+      readTime: '5 min read',
+      image: '/api/placeholder/400/300'
+    },
+    {
+      id: '3',
+      title: 'Beyond Aesthetics: The Power of Emotional UX Design',
+      excerpt: 'Delve into the realm of emotional design and discover how incorporating empathy and psychological principles can create more engaging user experiences.',
+      author: 'Ryan A.',
+      readTime: '2 min read',
+      image: '/api/placeholder/400/300'
+    }
+  ];
+
+  return {
+    featuredPost,
+    otherFeaturedPosts,
+    recentPosts
+  };
+}
+
+export default async function Home() {
+  const { featuredPost, otherFeaturedPosts, recentPosts } = await getData();
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      
+      <main>
+        <FeaturedSection 
+          featuredPost={featuredPost}
+          otherPosts={otherFeaturedPosts}
         />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+        
+        <RecentPosts posts={recentPosts} />
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
