@@ -25,7 +25,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPo
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 flex-grow">
         <div className="lg:col-span-2">
           <Link href={`/posts/${featuredPost.id}`} className="block">
-            <div className="relative h-[72vh] rounded-2xl overflow-hidden group cursor-pointer">
+            <div className="relative h-[74vh] rounded-2xl overflow-hidden group cursor-pointer">
               {mainImageError ? (
                 <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500">
                   <span>Image unavailable</span>
@@ -58,7 +58,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPo
           </Link>
         </div>
 
-        <div className="space-y-6 h-[72vh] flex flex-col">
+        <div className="space-y-6 h-[74vh] flex flex-col">
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Other featured posts</h3>
           <div className="overflow-y-auto flex-grow pr-2 
             [&::-webkit-scrollbar]:w-1.5 
