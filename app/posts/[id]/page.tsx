@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import PostImage from '@/components/PostImage';
 import ReactQueryProvider from '@/components/ReactQueryProvider';
-import { capitalizeFirstLetter } from './../../../utils/textUtils';
+import { capitalizeFirstLetter } from '@/utils/textUtils';
 
 const PostPage = () => {
   return (

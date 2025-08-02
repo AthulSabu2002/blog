@@ -22,7 +22,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Modern Blog App",
+  title: "Blog",
   description: "A blog with contemporary design and typography",
 };
 
