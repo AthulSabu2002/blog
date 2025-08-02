@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 async function getAllPosts() {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   
   if (!apiUrl) {
     console.error('API_URL environment variable is not defined');

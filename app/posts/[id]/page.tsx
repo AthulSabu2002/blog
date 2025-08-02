@@ -21,7 +21,9 @@ const Post = () => {
   const { data: post, isLoading, isError } = useQuery({
     queryKey: ['post', postId],
     queryFn: async () => {
-      const apiUrl = process.env.API_URL + `/${postId}`;
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL + `/${postId}`;
+
+      console.log(apiUrl)
       const response = await fetch(apiUrl);
       
       if (!response.ok) {
