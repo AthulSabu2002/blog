@@ -58,6 +58,8 @@ The application uses [mockapi.io](https://mockapi.io/) to generate blog data. Be
   }
 ]
 
+```
+
 
 ## Getting Started
 
