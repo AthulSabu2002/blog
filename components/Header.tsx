@@ -179,7 +179,7 @@ const Header: React.FC = () => {
                     {searchResults.map((post) => (
                       <li key={post.id} className="border-b border-gray-100 last:border-0">
                         <Link 
-                          href={`/blog/${post.id}`}
+                          href={`/posts/${post.id}`}
                           className="block px-4 py-2 hover:bg-gray-50"
                           onClick={() => {
                             setShowResults(false);
