@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FeaturedPost } from '../types';
+import { capitalizeFirstLetter } from '@/utils/textUtils';
 
 interface FeaturedSectionProps {
   featuredPost: FeaturedPost;
@@ -20,7 +21,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPo
   const [smallImageErrors, setSmallImageErrors] = useState<{[key: number]: boolean}>({});
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-5 min-h-screen flex flex-col">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 md:pt-16 pb-5 min-h-screen flex flex-col">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 flex-grow">
         <div className="lg:col-span-2">
           <Link href={`/posts/${featuredPost.id}`} className="block">
@@ -50,7 +51,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPo
                   {featuredPost.category}
                 </span>
                 <h2 className="text-white text-3xl md:text-4xl font-bold leading-tight">
-                  {featuredPost.title}
+                  {capitalizeFirstLetter(featuredPost.title)}
                 </h2>
               </div>
             </div>
@@ -93,7 +94,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPo
                 </div>
                 <div className="flex-1">
                   <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">
-                    {post.title}
+                    {capitalizeFirstLetter(post.title)}
                   </h4>
                   <p className="text-gray-600 text-sm mt-1 line-clamp-2">
                     {post.description}

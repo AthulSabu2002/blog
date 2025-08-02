@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import PostImage from '@/components/PostImage';
 import ReactQueryProvider from '@/components/ReactQueryProvider';
+import { capitalizeFirstLetter } from './../../../utils/textUtils';
 
 const PostPage = () => {
   return (
@@ -57,9 +58,9 @@ const Post = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 relative">
-      <div className="max-w-4xl mx-auto px-4 py-6 flex items-start gap-4">
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-6 flex items-start gap-4">
         <div className="bg-white overflow-hidden shadow-md w-full">
-          <div className="relative h-80 w-full">
+          <div className="relative h-48 sm:h-64 md:h-80 w-full">
             <PostImage
               src={post.image}
               alt={post.title}
@@ -67,9 +68,9 @@ const Post = () => {
             />
           </div>
 
-          <div className="p-8">
-            <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-              <div className="flex items-center">
+          <div className="p-4 sm:p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
+              <div className="flex flex-wrap items-center mb-2 sm:mb-0">
                 <span>{post.author}</span>
                 <span className="mx-2">•</span>
                 <span>{post.date}</span>
@@ -77,31 +78,31 @@ const Post = () => {
                 <span>{post.readTime}</span>
               </div>
               {post.featured && (
-                <span className="inline-block bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-sm text-sm font-medium">
+                <span className="inline-block bg-amber-50 text-amber-800 border border-amber-200 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium self-start sm:self-auto">
                   Featured
                 </span>
               )}
             </div>
 
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              {post.title}
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
+              {capitalizeFirstLetter(post.title)}
             </h1>
 
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
               {post.category && (
-                <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                <span className="inline-block bg-blue-100 text-blue-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
                   {post.category}
                 </span>
               )}
             </div>
 
-            <div className="prose max-w-none">
+            <div className="prose prose-sm sm:prose max-w-none">
               {post.description && (
-                <p className="text-lg text-gray-700 mb-6">{post.description}</p>
+                <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6">{post.description}</p>
               )}
 
               <div
-                className="mt-8 text-gray-800 leading-relaxed"
+                className="mt-4 sm:mt-8 text-gray-800 leading-relaxed text-sm sm:text-base"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
             </div>

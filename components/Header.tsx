@@ -64,11 +64,11 @@ const Header: React.FC = () => {
 
         {/* Mobile menu */}
         <div 
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out text-center ${
-            isMenuOpen ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0'
+          className={`md:hidden fixed left-0 right-0 bg-white shadow-lg z-40 transition-all duration-300 ease-in-out ${
+            isMenuOpen ? 'top-16 opacity-100' : 'top-[-100%] opacity-0'
           }`}
         >
-          <div className="flex flex-col items-center justify-center space-y-4 pt-2">
+          <div className="flex flex-col items-center justify-center space-y-4 py-6">
             <Link href="/" className="text-gray-700 hover:text-gray-900 transition-colors px-2 py-1">
               Homepage
             </Link>

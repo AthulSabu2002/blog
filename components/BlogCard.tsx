@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BlogPost } from '../types';
+import { capitalizeFirstLetter } from './../utils/textUtils';
 
 interface BlogCardProps {
   post: BlogPost;
@@ -39,7 +40,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
         </div>
         <div className="p-5">
           <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-            {post.title}
+            {capitalizeFirstLetter(post.title)}
           </h3>
           <p className="text-gray-600 mt-2 line-clamp-2">{post.description}</p>
           <div className="flex items-center mt-4 text-sm text-gray-500">

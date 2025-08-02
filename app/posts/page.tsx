@@ -62,19 +62,19 @@ export default async function AllPosts() {
   const posts = await getAllPosts();
   
   return (
-    <div className="min-h-screen bg-gray-50 py-16">
+    <div className="min-h-screen bg-gray-50 py-8 sm:py-12 md:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-6 sm:mb-8 md:mb-12">
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Explore our latest articles, insights and thoughts about SaaS solutions, design and technology.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {posts.length > 0 ? (
             posts.map((post: BlogPost) => <BlogCard key={post.id} post={post} />)
           ) : (
-            <div className="col-span-3 text-center py-16">
+            <div className="col-span-3 text-center py-8 sm:py-12 md:py-16">
               <p className="text-xl text-gray-500">No posts found. Please check back later.</p>
             </div>
           )}
