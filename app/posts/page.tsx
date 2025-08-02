@@ -38,16 +38,19 @@ async function getAllPosts() {
       throw new Error('Invalid JSON response');
     }
     
-    return posts.map((post: BlogPost): BlogPost => ({
-      id: post.id || '',
-      title: post.title || '',
-      description: post.description || '',
-      author: post.author || 'Unknown Author',
-      readTime: post.readTime || '3 min read',
-      image: post.image || '/api/placeholder/400/300',
-      content: post.content || '',
-      authorAvatar: post.authorAvatar
-    }));
+    return posts
+      .map((post: BlogPost): BlogPost => ({
+        id: post.id || '',
+        title: post.title || '',
+        description: post.description || '',
+        author: post.author || 'Unknown Author',
+        readTime: post.readTime || '3 min read',
+        image: post.image || '/api/placeholder/400/300',
+        content: post.content || '',
+        authorAvatar: post.authorAvatar,
+        featured: post.featured
+      }))
+      .filter((post: BlogPost) => post.featured === false);
     
   } catch (error) {
     console.error('Error fetching all posts:', error);

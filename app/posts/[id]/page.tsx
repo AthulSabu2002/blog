@@ -42,6 +42,7 @@ const Post = () => {
         author: postData.author || 'Unknown Author',
         date: new Date(postData.date).toLocaleDateString() || new Date().toLocaleDateString(),
         readTime: postData.readTime || '3 min read',
+        featured: postData.featured || false,
       };
     },
     staleTime: 1000 * 60 * 5,
@@ -69,23 +70,32 @@ const Post = () => {
           </div>
 
           <div className="p-8">
-            <div className="flex items-center text-sm text-gray-500 mb-4">
-              <span>{post.author}</span>
-              <span className="mx-2">•</span>
-              <span>{post.date}</span>
-              <span className="mx-2">•</span>
-              <span>{post.readTime}</span>
+            <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+              <div className="flex items-center">
+                <span>{post.author}</span>
+                <span className="mx-2">•</span>
+                <span>{post.date}</span>
+                <span className="mx-2">•</span>
+                <span>{post.readTime}</span>
+              </div>
+              {post.featured && (
+                <span className="inline-block bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-sm text-sm font-medium">
+                  Featured
+                </span>
+              )}
             </div>
 
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               {post.title}
             </h1>
 
-            {post.category && (
-              <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm mb-6">
-                {post.category}
-              </span>
-            )}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {post.category && (
+                <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                  {post.category}
+                </span>
+              )}
+            </div>
 
             <div className="prose max-w-none">
               {post.description && (

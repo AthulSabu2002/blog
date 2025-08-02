@@ -34,29 +34,36 @@ async function getData() {
       throw new Error('Invalid JSON response');
     }
     
-    const featuredPost: FeaturedPost = posts[0] && {
-      id: posts[0].id || '1',
-      title: posts[0].title || 'Unlocking Business Efficiency with SaaS Solutions',
-      description: posts[0].description || 'Discover how modern SaaS solutions can transform your business operations and drive growth.',
-      image: posts[0].image || '/api/placeholder/800/400',
-      category: posts[0].category || 'Business'
-    }
+    const featuredPosts = posts.filter((post: BlogPost) => post.featured === true);
+    const nonFeaturedPosts = posts.filter((post: BlogPost) => post.featured !== true);
     
-    const otherFeaturedPosts = posts.slice(1, 6).map((post: { id: string; title: string; description: string; image: string; }) => ({
+    const featuredPost: FeaturedPost | null = featuredPosts.length > 0 ? {
+      id: featuredPosts[0].id || '1',
+      title: featuredPosts[0].title || 'Unlocking Business Efficiency with SaaS Solutions',
+      description: featuredPosts[0].description || 'Discover how modern SaaS solutions can transform your business operations and drive growth.',
+      image: featuredPosts[0].image || '/api/placeholder/800/400',
+      category: featuredPosts[0].category || 'Business',
+      featured: true
+    } : null;
+    
+    const otherFeaturedPosts = featuredPosts.slice(1).map((post: { id: string; title: string; description: string; image: string; featured: boolean; }) => ({
       id: post.id,
       title: post.title,
       description: post.description || '',
-      image: post.image
+      image: post.image,
+      featured: post.featured
     }));
     
-    const recentPosts: BlogPost[] = posts.slice(6, 9).map((post: { id: string; title: string; description: string; author: string; readTime: string; image: string; authorAvatar: string; }) => ({
+    const recentPostsSource = nonFeaturedPosts.length >= 3 ? nonFeaturedPosts : posts;
+    const recentPosts: BlogPost[] = recentPostsSource.slice(0, 3).map((post: { id: string; title: string; description: string; author: string; readTime: string; image: string; authorAvatar: string; featured: boolean; }) => ({
       id: post.id || '',
       title: post.title || '',
       description: post.description || '',
       author: post.author || 'Unknown Author',
       readTime: post.readTime || '3 min read',
       image: post.image,
-      authorAvatar: post.authorAvatar
+      authorAvatar: post.authorAvatar,
+      featured: post.featured
     }));
     
     return {

@@ -6,6 +6,7 @@ export interface BlogPost {
   image: string;
   category?: string;
   authorAvatar: string;
+  featured?: boolean;
 }
 
 export interface FeaturedPost {
