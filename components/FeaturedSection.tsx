@@ -16,7 +16,6 @@ interface FeaturedSectionProps {
 }
 
 const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPosts }) => {
-  console.log(otherPosts)
   const [mainImageError, setMainImageError] = useState(false);
   const [smallImageErrors, setSmallImageErrors] = useState<{[key: number]: boolean}>({});
 
@@ -60,7 +59,14 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPo
 
         <div className="space-y-6 h-[72vh] flex flex-col">
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Other featured posts</h3>
-          <div className="overflow-y-auto flex-grow pr-2 scrollbar scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+          <div className="overflow-y-auto flex-grow pr-2 
+            [&::-webkit-scrollbar]:w-1.5 
+            [&::-webkit-scrollbar-track]:bg-transparent
+            [&::-webkit-scrollbar-thumb]:bg-gray-200
+            [&::-webkit-scrollbar-thumb]:rounded-full
+            hover:[&::-webkit-scrollbar-thumb]:bg-gray-300
+            [&::-webkit-scrollbar-thumb]:transition-colors
+            [&::-webkit-scrollbar-thumb]:duration-300">
             {otherPosts.map((post, index) => (
               <Link 
                 href={`/posts/${post.id}`} 
