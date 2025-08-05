@@ -72,9 +72,9 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredPost, otherPo
               <Link 
                 href={`/posts/${post.id}`} 
                 key={index} 
-                className="flex space-x-4 group cursor-pointer mb-6 last:mb-0"
+                className="flex space-x-4 group cursor-pointer mb-4 last:mb-0 pb-6 border-b border-gray-200 last:border-b-0"
               >
-                <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden">
+                <div className="flex-shrink-0 w-16 h-16 rounded-2xl overflow-hidden">
                   {smallImageErrors[index] ? (
                     <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500 text-xs">
                       <span>Image Unavailable</span>

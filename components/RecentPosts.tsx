@@ -13,7 +13,7 @@ const RecentPosts: React.FC<RecentPostsProps> = ({ posts }) => {
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-bold text-gray-900">Recent Posts</h2>
         <Link href="/posts" className="bg-white text-black px-4 py-2 rounded-md font-medium border border-gray-300 hover:bg-gray-100 transition-colors shadow-sm">
-          All Posts →
+          All Posts
         </Link>
       </div>
       
