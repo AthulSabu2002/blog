@@ -58,6 +58,8 @@ The application uses [mockapi.io](https://mockapi.io/) to generate blog data. Be
   }
 ]
 
+```
+
 
 ## Getting Started
 
@@ -71,7 +73,7 @@ The application uses [mockapi.io](https://mockapi.io/) to generate blog data. Be
 1. Clone the repository:
 
    ```bash
-   git clone [your-repo-url]
+   git clone https://github.com/AthulSabu2002/blog.git
    cd blog-app
    ```
 
